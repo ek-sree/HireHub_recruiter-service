@@ -4,6 +4,9 @@ package recruiter;
 
 service RecruiterService {
     rpc RegisterRecruiter(RegisterRecruiterRequest) returns (RegisterRecruiterResponse);
+    rpc VerifyOtp(VerifyOtpRequest) returns (VerifyOtpResponse);
+    rpc ResendOtp(ResendOtpRequest) returns (ResendOtpResponse);
+    rpc Login(LoginUserRequest) returns (LoginUserResponse);
 }
 
 message RegisterRecruiterRequest {
@@ -29,4 +32,37 @@ message RegisterRecruiterResponse {
     bool success = 2;
     string otp = 3;
     RecruiterData recruiter_data = 4;
+}
+
+message VerifyOtpRequest {
+    RecruiterData recruiter_data = 1;
+}
+
+message VerifyOtpResponse {
+    string message = 1;
+    bool success = 2;
+    bool isRecruiter = 3;
+    RecruiterData recruiter_data = 4;
+}
+
+message ResendOtpRequest {
+    string email = 1;
+}
+
+message ResendOtpResponse {
+    string message = 1;
+    bool success = 2;
+    string newOtp = 3;
+}
+
+message LoginUserRequest {
+    string email = 1;
+    string password = 2;
+}
+
+message LoginUserResponse {
+    string message = 1;
+    bool success = 2;
+    RecruiterData recruiter_data = 3;
+    bool isRecruiter = 4;
 }

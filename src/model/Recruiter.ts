@@ -15,18 +15,18 @@ const recruiterSchema: Schema = new Schema({
         unique: true
     },
     phone:{
-        type: Number,
+        type: String,
         required: true
     },
     password:{
-        type: Number,
+        type: String,
         required: true
     },
-    companyname:{
+    companyName:{
         type: String,
         requiree: true
     },
-    companyemail:{
+    companyEmail:{
         type: String,
         required: true
     },
@@ -35,7 +35,7 @@ const recruiterSchema: Schema = new Schema({
     },
     status:{
         type: Boolean,
-        default: false
+        default: true
     },
     isVerified:{
         type: Boolean,

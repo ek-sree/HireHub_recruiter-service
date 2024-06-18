@@ -23,8 +23,12 @@ export const registerRecruiter = async (recruiterData: IRecruiter): Promise<any>
 };
 
 export const verifyOtp = async (recruiterData: IRecruiter): Promise<any> =>{
+    console.log("sda", recruiterData);
+    
     try {
         const savedRecruiter = await recruiterRepo.save(recruiterData);
+        console.log("Saved rec", savedRecruiter);
+        
         return{ message:"User Data saved successfully", success: true, recruiter_data: savedRecruiter};
     } catch (error) {
         const err = error as Error;
@@ -32,16 +36,24 @@ export const verifyOtp = async (recruiterData: IRecruiter): Promise<any> =>{
     }
 };
 
-export const resendOtp = async(email: string): Promise<any> =>{
+export const resendOtp = async(email:{email: string}): Promise<any> =>{
     try {
-        const otp = generateOtp()
-        await sendOtpEmail(email, otp);
-        return { success: true, newOtp: otp};
+        console.log("Email received for resend OTP:", email);  
+        
+        const otp = generateOtp();
+        console.log("Generated OTP:", otp);  
+        
+        await sendOtpEmail(email.email, otp);
+        
+        console.log("OTP sent successfully");  
+        return { success: true, newOtp: otp };
     } catch (error) {
         const err = error as Error;
-        throw new Error(`Error saving user: ${err.message}`);
+        console.error("Error in resendOtp function:", err);  
+        throw new Error(`Error resending OTP: ${err.message}`);
     }
 };
+
 
 export const loginRecruiter = async(email: string, password: string) =>{
     try {

@@ -17,8 +17,11 @@ export const recruiterController = {
 
     verifyOtp: async(call: any, callback: any) =>{
         try {
-            const result = await verifyOtp(call.request);
+            const recruiterData = call.request.recruiter_data
+            const result = await verifyOtp(recruiterData);
             callback(null, result);
+            console.log("Rec", result);
+            
         } catch (error) {
             const err = error as Error;
             callback({
@@ -30,7 +33,11 @@ export const recruiterController = {
 
     ResendOtp: async(call: any, callback: any) =>{
         try {
+            console.log("resend",call.request);
+            
             const result = await resendOtp(call.request);
+            console.log("res resend", result);
+            
             callback(null, result);
         } catch (error) {
             const err = error as Error;
@@ -43,8 +50,12 @@ export const recruiterController = {
 
     loginRecruiter : async(call: any, callback: any) =>{
         try {
+            console.log(":login rec", call.request);
+            
             const { email , password} = call.request;
             const result = await loginRecruiter(email, password);
+            console.log("res login rec",result);
+            
             callback(null, result);
         } catch (error) {
             const err = error as Error;

@@ -3,7 +3,6 @@ import config from '../infrastructure/config';
 import fs from 'fs';
 import path from 'path';
 
-
 const logoPath = path.resolve(__dirname, '../assets/HireHub.png');
 const logoBase64 = fs.readFileSync(logoPath, { encoding: 'base64' });
 
@@ -16,6 +15,12 @@ const transporter = nodemailer.createTransport({
 });
 
 export const sendOtpEmail = async (to: string, otp: string): Promise<void> => {
+    if (typeof to !== 'string') {
+        console.error("Invalid email address: ", to);
+        throw new Error("Invalid email address");
+    }
+
+    console.log('Sending OTP email to:', to);
     const mailOptions = {
         from: config.EMAIL,
         to,
