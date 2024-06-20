@@ -64,3 +64,28 @@ export const loginRecruiter = async(email: string, password: string) =>{
         throw new Error(`Error saving user: ${err.message}`);
     }
 };
+
+export const fetchRecruiter = async() => {
+    try {
+        let recruiter = await recruiterRepo.getRecruiter();
+        if(!recruiter){
+            return { success: false, message: "no data found" }
+        }
+        const recruiter_data = recruiter.map((recruiter: any) => {
+            return{
+                _id: recruiter._id.toString(),
+                name: recruiter.name,
+                email: recruiter.email,
+                phone: recruiter.phone,
+                status: recruiter.status
+            }
+        
+    })
+        return { success: true, recruiter_data}
+    
+    } catch (error) {
+        const err = error as Error;
+        throw new Error(`Error finding recruiter details: ${err.message}`);
+    }
+    
+}

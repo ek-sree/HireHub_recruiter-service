@@ -7,6 +7,7 @@ service RecruiterService {
     rpc VerifyOtp(VerifyOtpRequest) returns (VerifyOtpResponse);
     rpc ResendOtp(ResendOtpRequest) returns (ResendOtpResponse);
     rpc Login(LoginUserRequest) returns (LoginUserResponse);
+    rpc GetRecruiters(GetRecruitersRequest) returns (GetRecruitersResponse);
 }
 
 message RegisterRecruiterRequest {
@@ -25,6 +26,7 @@ message RecruiterData {
     string password = 4;
     string companyName = 5;
     string companyEmail = 6;
+    bool isVerified = 7;
 }
 
 message RegisterRecruiterResponse {
@@ -65,4 +67,13 @@ message LoginUserResponse {
     bool success = 2;
     RecruiterData recruiter_data = 3;
     bool isRecruiter = 4;
+    string _id = 5;
+}
+
+message GetRecruitersRequest {}
+
+message GetRecruitersResponse {
+    bool success = 1;
+    string message = 2;
+    repeated RecruiterData recruiter_data = 3;
 }

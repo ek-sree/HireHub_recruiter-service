@@ -41,7 +41,7 @@ export class RecruiterRepository implements IRecruiterRepository {
         try {
             const recruiter_data = await Recruiter.findOne({email}).exec();
             if(!recruiter_data){
-                return { success: false, message:"Message incorrect"};
+                return { success: false, message:"Email is incorrect"};
             }
 
             const isPasswordMatch = await bcrypt.compare(password, recruiter_data.password);
@@ -56,5 +56,15 @@ export class RecruiterRepository implements IRecruiterRepository {
             const err = error as Error;
             throw new Error(`Error finding user by email and password: ${err.message}`);
         }
+    }
+
+     async getRecruiter(): Promise<IRecruiter[]> {
+        try {
+            const recruiter = await Recruiter.find().select('-password').exec();
+            return recruiter
+        } catch (error) {
+                const err = error as Error;
+                throw new Error(`Error fetching recruiter: ${err.message}`);
+            }
     }
 }

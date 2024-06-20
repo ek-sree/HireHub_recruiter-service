@@ -1,5 +1,5 @@
 import * as grpc from '@grpc/grpc-js';
-import { loginRecruiter, registerRecruiter, resendOtp, verifyOtp } from '../../application/use-case/recruiter';
+import { fetchRecruiter, loginRecruiter, registerRecruiter, resendOtp, verifyOtp } from '../../application/use-case/recruiter';
 
 export const recruiterController = {
     registerRecruiter: async(call: any, callback: any)=>{
@@ -64,5 +64,19 @@ export const recruiterController = {
                 message:err.message,
             },null);
         }
+    },
+
+    fetchedRecruiterData: async(call: any, callback: any) => {
+        try {
+           const result = await fetchRecruiter();
+           console.log("recruiter fetching", result);
+           callback(null, result) 
+        } catch (error) {
+            const err = error as Error;
+            callback({
+               code:grpc.status.INTERNAL,
+               message:err.message,
+            },null); 
+           }
     }
 }

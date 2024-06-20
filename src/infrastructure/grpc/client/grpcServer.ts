@@ -22,7 +22,8 @@ server.addService(recruiterProto.RecruiterService.service,{
     RegisterRecruiter: recruiterController.registerRecruiter,
     VerifyOtp: recruiterController.verifyOtp,
     ResendOtp: recruiterController.ResendOtp,
-    Login: recruiterController.loginRecruiter
+    Login: recruiterController.loginRecruiter,
+    GetRecruiters: recruiterController.fetchedRecruiterData,
 })
 
 const startGrpcService = () =>{
