@@ -1,9 +1,8 @@
 import express from 'express';
 import config from '../config';
 import { connectToDatabase } from '../database/mongodb';
-import { connectToRabbitMQ } from '../mq/rabbitmq';
 import { startGrpcService } from '../grpc/client/grpcServer';
-
+import RabbitMQClient from '../mq/client';
 
 const app = express();
 app.use(express.json());
@@ -11,8 +10,8 @@ app.use(express.json());
 const startServer = async ()=>{
     try {
         await connectToDatabase();
-        await connectToRabbitMQ();
-        await startGrpcService()
+        await startGrpcService();
+        RabbitMQClient.initialize();
 
         const port = config.port;
         app.listen(port, ()=>{

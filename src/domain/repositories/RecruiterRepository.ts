@@ -58,13 +58,5 @@ export class RecruiterRepository implements IRecruiterRepository {
         }
     }
 
-     async getRecruiter(): Promise<IRecruiter[]> {
-        try {
-            const recruiter = await Recruiter.find().select('-password').exec();
-            return recruiter
-        } catch (error) {
-                const err = error as Error;
-                throw new Error(`Error fetching recruiter: ${err.message}`);
-            }
-    }
+     
 }

@@ -1,82 +1,60 @@
 import * as grpc from '@grpc/grpc-js';
-import { fetchRecruiter, loginRecruiter, registerRecruiter, resendOtp, verifyOtp } from '../../application/use-case/recruiter';
+import { recruiterService } from '../../application/use-case/recruiter';
 
-export const recruiterController = {
-    registerRecruiter: async(call: any, callback: any)=>{
+class RecruiterController {
+    async registerRecruiter(call: any, callback: any) {
         try {
-            const result = await registerRecruiter(call.request);
+            const result = await recruiterService.registerRecruiter(call.request);
             callback(null, result);
         } catch (error) {
             const err = error as Error;
             callback({
                 code: grpc.status.INTERNAL,
-                message:err.message,
-            },null);
+                message: err.message,
+            }, null);
         }
-    },
+    }
 
-    verifyOtp: async(call: any, callback: any) =>{
+    async verifyOtp(call: any, callback: any) {
         try {
-            const recruiterData = call.request.recruiter_data
-            const result = await verifyOtp(recruiterData);
-            callback(null, result);
-            console.log("Rec", result);
-            
-        } catch (error) {
-            const err = error as Error;
-            callback({
-                code: grpc.status.INTERNAL,
-                message:err.message,
-            },null);
-        }
-    },
-
-    ResendOtp: async(call: any, callback: any) =>{
-        try {
-            console.log("resend",call.request);
-            
-            const result = await resendOtp(call.request);
-            console.log("res resend", result);
-            
+            const recruiterData = call.request.recruiter_data;
+            const result = await recruiterService.verifyOtp(recruiterData);
             callback(null, result);
         } catch (error) {
             const err = error as Error;
             callback({
                 code: grpc.status.INTERNAL,
-                message:err.message,
-            },null);
+                message: err.message,
+            }, null);
         }
-    },
+    }
 
-    loginRecruiter : async(call: any, callback: any) =>{
+    async resendOtp(call: any, callback: any) {
         try {
-            console.log(":login rec", call.request);
-            
-            const { email , password} = call.request;
-            const result = await loginRecruiter(email, password);
-            console.log("res login rec",result);
-            
+            const result = await recruiterService.resendOtp(call.request);
             callback(null, result);
         } catch (error) {
             const err = error as Error;
             callback({
                 code: grpc.status.INTERNAL,
-                message:err.message,
-            },null);
+                message: err.message,
+            }, null);
         }
-    },
+    }
 
-    fetchedRecruiterData: async(call: any, callback: any) => {
+    async loginRecruiter(call: any, callback: any) {
         try {
-           const result = await fetchRecruiter();
-           console.log("recruiter fetching", result);
-           callback(null, result) 
+            const { email, password } = call.request;
+            const result = await recruiterService.loginRecruiter(email, password);
+            callback(null, result);
         } catch (error) {
             const err = error as Error;
             callback({
-               code:grpc.status.INTERNAL,
-               message:err.message,
-            },null); 
-           }
+                code: grpc.status.INTERNAL,
+                message: err.message,
+            }, null);
+        }
     }
 }
+
+export const recruiterController = new RecruiterController();
