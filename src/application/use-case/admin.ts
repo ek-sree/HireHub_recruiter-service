@@ -28,6 +28,18 @@ class AdminService {
             throw new Error(`Error finding recruiter details: ${err.message}`);
         }
     }
+
+    async blockedRecruiter(recruiterId: string): Promise<{success: boolean, message: string}> {
+    try {
+        const result = await this.adminRepo.blockUnblock(recruiterId);
+        return result;
+    } catch (error) {
+        if (error instanceof Error) {
+            throw new Error(`Error blocking user: ${error.message}`);
+        }
+        throw error;
+    }
+    }
 }
 
 export { AdminService }

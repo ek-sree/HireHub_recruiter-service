@@ -10,6 +10,11 @@ export default class MessageHandler {
                 response = await adminController.fetchedRecruiterData();
                 console.log("response of fetch user in message handler",response);
                 break;
+
+            case 'block-recruiter':
+                response = await adminController.blockRecruiter(data);    
+                break;
+                
             default:
                 response = { error: 'Operation not supported' };
                 break;

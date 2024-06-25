@@ -15,6 +15,16 @@ class AdminController {
             console.log("error fetching all recruiter", error);
         }
     }
+
+    async blockRecruiter(recruiterId: string)  {
+        try {
+            const result = await this.adminServicer.blockedRecruiter(recruiterId);
+            return result;
+        } catch (error) {
+            console.error("Error blocking user:", error);
+            return { success: false, message: 'Error blocking user' };
+        }
+    }
 }
 
 export const adminController = new AdminController();
