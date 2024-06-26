@@ -19,6 +19,8 @@ class RecruiterController {
         try {
             const recruiterData = call.request.recruiter_data;
             const result = await recruiterService.verifyOtp(recruiterData);
+            console.log("verify otp recruiter confirm controller.....",result);
+            
             callback(null, result);
         } catch (error) {
             const err = error as Error;
@@ -46,6 +48,8 @@ class RecruiterController {
         try {
             const { email, password } = call.request;
             const result = await recruiterService.loginRecruiter(email, password);
+            console.log("loin recruiter controller..ld...",result);
+            
             callback(null, result);
         } catch (error) {
             const err = error as Error;

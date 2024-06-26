@@ -11,6 +11,14 @@ export default class MessageHandler {
                 console.log("response of fetch user in message handler",response);
                 break;
 
+            case 'unVerify-recruiter':
+                response = await adminController.unVerifiedRecr();
+                break;
+
+            case 'verify-recruiter':
+                response = await adminController.verifyedRecruiter(data)
+                break;
+
             case 'block-recruiter':
                 response = await adminController.blockRecruiter(data);    
                 break;

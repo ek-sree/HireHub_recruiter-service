@@ -48,7 +48,7 @@ export class RecruiterRepository implements IRecruiterRepository {
             if(!isPasswordMatch){
                 return { success: false, message: "Password is incorrect"};
             }
-            if(recruiter_data.status !== true){
+            if(recruiter_data.status === true){
                 return { success: false, message:"Your account has been blocked"};
             }
             return { success: true, message:"Recruiter found", recruiter_data }

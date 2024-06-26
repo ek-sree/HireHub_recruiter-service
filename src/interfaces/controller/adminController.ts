@@ -7,6 +7,24 @@ class AdminController {
         this.adminServicer = new AdminService();
     }
 
+    async unVerifiedRecr() {
+        try {
+            const result = await this.adminServicer.unVerifiedRec();
+            return result;
+        } catch (error) {
+            console.log("error fetching all recruiter", error);
+        }
+    }
+
+    async verifyedRecruiter(recruiterId: string) {
+        try {
+            const result = await this.adminServicer.verifyingRecruiter(recruiterId)
+            return result;
+        } catch (error) {
+            console.log("error fetching all recruiter", error);
+        }
+    }
+
     async fetchedRecruiterData() {
         try {
             const result = await this.adminServicer.fetchRecruiter();
