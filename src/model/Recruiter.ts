@@ -1,54 +1,49 @@
 import mongoose, { Document, Schema } from "mongoose";
 import { IRecruiter } from "../domain/entities/IRecruiter";
 
-
+//@ts-ignore
 export interface IRecruiterDocument extends IRecruiter, Document {}
 
 const recruiterSchema: Schema = new Schema({
-    name:{
-        type: String,
-        required: true
-    },
-    email:{
+    name: {
         type: String,
         required: true,
-        unique: true
     },
-    phone:{
+    email: {
         type: String,
-        required: true
+        required: true,
+        unique: true,
     },
-    password:{
+    phone: {
         type: String,
-        required: true
+        required: true,
     },
-    companyName:{
+    password: {
         type: String,
-        requiree: true
+        required: true,
     },
-    companyEmail:{
+    companyName: {
         type: String,
-        required: true
+        required: true,
     },
-    coverphoto:{
-        type: String
+    companyEmail: {
+        type: String,
+        required: true,
+        unique: true,
     },
-    status:{
+    status: {
         type: Boolean,
-        default: false
+        default: false,
     },
-    isVerified:{
+    isVerified: {
         type: Boolean,
-        default: false
+        default: false,
     },
-    avatar:{
-        type: String
-    },
-    created_at:{
+    created_at: {
         type: Date,
         required: true,
-        default: Date.now()
-    }
-})
+        default: Date.now,
+    },
+});
 
 export const Recruiter = mongoose.model<IRecruiterDocument>("Recruiter", recruiterSchema);

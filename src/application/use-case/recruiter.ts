@@ -13,11 +13,17 @@ class RecruiterService {
     async registerRecruiter(recruiterData: IRecruiter): Promise<any> {
         try {
             const recruiterExist = await this.recruiterRepo.findByEmail(recruiterData.email);
+            const companyEmailExist = await this.recruiterRepo.findByCompanyEmail(recruiterData.companyEmail);
+            
             if (recruiterExist) {
-                return { success: false, message: "Email already exist" };
+                return { success: false, message: "Recruiter email already exists" };
+            } else if (companyEmailExist) {
+                return { success: false, message: "Company email already exists" };
             } else {
+                console.log("company email for otp", recruiterData.companyEmail);
+
                 const otp = generateOtp();
-                await sendOtpEmail(recruiterData.email, otp);
+                await sendOtpEmail(recruiterData.companyEmail, otp);
                 return { message: "Success", success: true, otp, recruiter_data: recruiterData };
             }
         } catch (error) {
@@ -56,7 +62,6 @@ class RecruiterService {
             throw new Error(`Error logging in: ${err.message}`);
         }
     }
-
 }
 
 export const recruiterService = new RecruiterService();

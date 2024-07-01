@@ -1,10 +1,11 @@
 export interface IRecruiter {
-    email: string;
+    _id?:string;
     name: string;
+    email: string;
     phone: string;
-    companyname: string;
-    companyemail: string;
     password: string;
+    companyName: string;
+    companyEmail: string;
     coverphoto?: string;
     avatar?: string;
     status?: boolean;
