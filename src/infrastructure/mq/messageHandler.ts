@@ -7,7 +7,7 @@ export default class MessageHandler {
 
         switch (operation) {
             case 'get-all-recruiter':
-                response = await adminController.fetchedRecruiterData();
+                response = await adminController.fetchedRecruiterData(data);
                 console.log("response of fetch user in message handler",response);
                 break;
 
@@ -22,6 +22,10 @@ export default class MessageHandler {
             case 'block-recruiter':
                 response = await adminController.blockRecruiter(data);    
                 break;
+
+            case 'search-recruiter':
+                response = await adminController.searchRecruiter(data);
+                break;    
                 
             default:
                 response = { error: 'Operation not supported' };

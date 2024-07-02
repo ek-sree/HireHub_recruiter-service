@@ -53,13 +53,13 @@ class AdminService {
         }
     }
 
-    async fetchRecruiter(): Promise<any> {
+    async fetchRecruiter(page: number, limit: number): Promise<any> {
         try {
-            let recruiter = await this.adminRepo.getRecruiter();
-            if (!recruiter) {
+            let {recruiters, totalRecruiters} = await this.adminRepo.getRecruiter(page, limit);
+            if (!recruiters) {
                 return { success: false, message: "no data found" };
             }
-            const recruiter_data = recruiter.map((recruiter: any) => {
+            const recruiter_data = recruiters.map((recruiter: any) => {
                 return {
                     _id: recruiter._id.toString(),
                     name: recruiter.name,
@@ -68,7 +68,7 @@ class AdminService {
                     status: recruiter.status
                 };
             });
-            return { success: true, recruiter_data };
+            return { success: true, recruiter_data, totalRecruiters };
         } catch (error) {
             const err = error as Error;
             throw new Error(`Error finding recruiter details: ${err.message}`);
@@ -85,6 +85,22 @@ class AdminService {
         }
         throw error;
     }
+    }
+
+    async searchRecruiter(searchValue: string): Promise<{success: boolean, message: string, recruiter?: IRecruiter[] | undefined }> {
+        try {
+            const result = await this.adminRepo.searchByName(searchValue);
+            if(!result || result.length === 0){
+                return {success: false, message: "No user found"}
+            }
+            return {success: true, message:"User found", recruiter: result}
+        } catch (error) {
+            console.log("error searching recruiter in service", error);
+            if(error instanceof Error){
+                throw new Error(`Error searching recruiter list:${error.message}`)
+            }
+            throw error;
+        }
     }
 }
 

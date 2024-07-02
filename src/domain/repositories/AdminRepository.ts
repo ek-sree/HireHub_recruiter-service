@@ -44,10 +44,12 @@ export class AdminRepository implements IAdminRepository {
         }
     }
 
-    async getRecruiter(): Promise<IRecruiter[]> {
+    async getRecruiter(page: number, limit: number): Promise<{ recruiters:IRecruiter[], totalRecruiters: number}> {
         try {
-            const recruiter = await Recruiter.find({isVerified: true}).select('-password').exec();
-            return recruiter
+            const skip = (page-1) * limit;
+            const recruiters = await Recruiter.find({isVerified: true}).skip(skip).limit(2).select('-password').exec();
+            const totalRecruiters = await Recruiter.countDocuments();
+            return { recruiters,totalRecruiters }
         } catch (error) {
                 const err = error as Error;
                 throw new Error(`Error fetching recruiter: ${err.message}`);
@@ -81,6 +83,21 @@ export class AdminRepository implements IAdminRepository {
             console.error("Error in blockUnblock:", error);
             const err = error as Error;
             throw new Error(`Error blocking or unblocking recruiter: ${err.message}`);
+        }
+    }
+
+    async searchByName(searchValue: string): Promise<IRecruiter[]> {
+        try {
+            if(typeof searchValue !== 'string'){
+                throw new Error("Error finding recruiter data")
+            }
+            const value = new RegExp(searchValue);
+            const recruiter = await Recruiter.find({name: value}).select("-password").exec();
+            return recruiter;
+        } catch (error) {
+            console.error("Error searching recruiter:", error);
+            const err = error as Error;
+            throw new Error(`Error searching recruiter: ${err.message}`);
         }
     }
 }
