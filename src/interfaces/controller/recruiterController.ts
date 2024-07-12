@@ -52,7 +52,6 @@ class RecruiterController {
         try {
             const { email, password } = call.request;
             const result = await recruiterService.loginRecruiter(email, password);
-            console.log("loin recruiter controller..ld...",result);
             if (result.recruiter_data && result.recruiter_data._id) {
                 result.recruiter_data._id = result.recruiter_data._id.toString();
             }
