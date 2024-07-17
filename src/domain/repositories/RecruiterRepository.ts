@@ -26,15 +26,12 @@ export class RecruiterRepository implements IRecruiterRepository {
 
     async save(recruiter: IRecruiter): Promise<IRecruiter> {
         try {
-            console.log("Saving recruiter:", recruiter);
 
             const hashedPassword = await bcrypt.hash(recruiter.password, 10);
-            console.log("Hashed password:", hashedPassword);
 
             const recruiterWithHashedPassword = { ...recruiter, password: hashedPassword };
             const {_id, ...recruiterWithoutId} = recruiterWithHashedPassword;
             const newRecruiter = new Recruiter(recruiterWithoutId);
-            console.log("New recruiter instance:", newRecruiter);
 
             const savedRecruiter = await newRecruiter.save();
             console.log("Saved recruiter:", savedRecruiter);
