@@ -100,4 +100,15 @@ export class AdminRepository implements IAdminRepository {
             throw new Error(`Error searching recruiter: ${err.message}`);
         }
     }
+
+    async findBlockedRecruiter():Promise<{success:boolean, message:string, data?:number}>{
+        try {
+            const recruiter = await Recruiter.find({status:true}).countDocuments();
+            return {success:true, message:"Data fetched", data:recruiter}
+        } catch (error) {
+            console.error("Error fetching blocked recruiter:", error);
+            const err = error as Error;
+            throw new Error(`Error fetching blocked recruiter: ${err.message}`);
+        }
+    }
 }

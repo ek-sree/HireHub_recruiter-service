@@ -25,6 +25,10 @@ export default class MessageHandler {
 
             case 'search-recruiter':
                 response = await adminController.searchRecruiter(data);
+                break;  
+                
+            case 'blocked-recruiter-report':
+                response = await adminController.getBlockedRecruiter();
                 break;    
                 
             default:

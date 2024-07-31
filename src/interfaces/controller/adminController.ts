@@ -55,6 +55,16 @@ class AdminController {
             return { success: false, message: 'Error searching recruiter value' };
         }
     }
+
+    async getBlockedRecruiter(){
+        try {
+            const result = await this.adminServicer.fetchBlockedRecruiter();
+            return result;
+        } catch (error) {
+            console.error("Error fetching blocked recruiter value:", error);
+            return { success: false, message: 'Error fetching blocked recruiter value' };
+        }
+    }
 }
 
 export const adminController = new AdminController();

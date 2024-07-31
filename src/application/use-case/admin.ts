@@ -102,6 +102,19 @@ class AdminService {
             throw error;
         }
     }
+
+    async fetchBlockedRecruiter():Promise<{success:boolean, message:string, data?:number}>{
+        try {
+            const result = await this.adminRepo.findBlockedRecruiter();
+            return {success:result.success, message:result.message, data:result.data}
+        } catch (error) {
+            console.log("error fetching recruiter in service", error);
+            if(error instanceof Error){
+                throw new Error(`Error fetching recruiter list:${error.message}`)
+            }
+            throw error;
+        }
+    }
 }
 
 export { AdminService }
