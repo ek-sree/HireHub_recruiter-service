@@ -20,8 +20,6 @@ class RecruiterService {
             } else if (companyEmailExist) {
                 return { success: false, message: "Company email already exists" };
             } else {
-                console.log("company email for otp", recruiterData.companyEmail);
-
                 const otp = generateOtp();
                 await sendOtpEmail(recruiterData.companyEmail, otp);
                 return { message: "Success", success: true, otp, recruiter_data: recruiterData };

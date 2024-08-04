@@ -34,8 +34,6 @@ export class RecruiterRepository implements IRecruiterRepository {
             const newRecruiter = new Recruiter(recruiterWithoutId);
 
             const savedRecruiter = await newRecruiter.save();
-            console.log("Saved recruiter:", savedRecruiter);
-
             return savedRecruiter;
         } catch (error) {
             console.error("Error saving user:", error);

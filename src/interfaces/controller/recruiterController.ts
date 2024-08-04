@@ -3,9 +3,7 @@ import { recruiterService } from '../../application/use-case/recruiter';
 
 class RecruiterController {
     async registerRecruiter(call: any, callback: any) {
-        try {
-            console.log("call req rec signup",call.request);
-            
+        try {            
             const result = await recruiterService.registerRecruiter(call.request);
             callback(null, result);
         } catch (error) {
@@ -20,9 +18,7 @@ class RecruiterController {
     async verifyOtp(call: any, callback: any) {
         try {
             const recruiterData = call.request.recruiter_data;
-            const result = await recruiterService.verifyOtp(recruiterData);
-            console.log("verify otp recruiter confirm controller.....",result);
-            
+            const result = await recruiterService.verifyOtp(recruiterData);            
             callback(null, result);
         } catch (error) {
             const err = error as Error;
@@ -35,9 +31,7 @@ class RecruiterController {
 
     async resendOtp(call: any, callback: any) {
         try {
-            const result = await recruiterService.resendOtp(call.request);
-            console.log("result resned otp", result);
-            
+            const result = await recruiterService.resendOtp(call.request);            
             callback(null, result);
         } catch (error) {
             const err = error as Error;

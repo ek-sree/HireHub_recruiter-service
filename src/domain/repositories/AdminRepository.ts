@@ -19,18 +19,13 @@ export class AdminRepository implements IAdminRepository {
 
     async verifyRecruiter(recruiterId: string | { recruiterId: string }): Promise<{success:boolean, message:string}> {
         try {
-            console.log("reached recruiter id", recruiterId);
             const idString = typeof recruiterId === "string" ? recruiterId : recruiterId.recruiterId;
             
             if(!mongoose.Types.ObjectId.isValid(idString)) {
                 return { success: false, message: "Invalid recruiterId" };
             }
-            const id = new mongoose.Types.ObjectId(idString);
-            console.log("COnverted to object id", id);
-            
+            const id = new mongoose.Types.ObjectId(idString);            
             const recruiter = await Recruiter.findById(id);
-            console.log("Recruiter found for block or unblock", recruiter);
-
             if(!recruiter){
                 return { success: false, message: "recruiter not found" };
             }
@@ -58,17 +53,14 @@ export class AdminRepository implements IAdminRepository {
 
     async blockUnblock(recruiterId: string | { recruiterId: string }): Promise<{ success: boolean, message: string }>{
         try {
-            console.log("reached recruiter id", recruiterId);
             const idString = typeof recruiterId === "string" ? recruiterId : recruiterId.recruiterId;
             
             if(!mongoose.Types.ObjectId.isValid(idString)) {
                 return { success: false, message: "Invalid recruiterId" };
             }
             const id = new mongoose.Types.ObjectId(idString);
-            console.log("COnverted to object id", id);
             
             const recruiter = await Recruiter.findById(id);
-            console.log("Recruiter found for block or unblock", recruiter);
             
             if(!recruiter){
                 return { success: false, message: "recruiter not found" };
@@ -76,7 +68,6 @@ export class AdminRepository implements IAdminRepository {
             
             recruiter.status = !recruiter.status;
             await recruiter.save();
-            console.log("Recruiter status updated", recruiter.status);
             
             return { success: true, message: `${recruiter.name} is now ${recruiter.status ? "blocked" : "unblocked" !}`}
         } catch (error) {
