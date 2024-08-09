@@ -8,7 +8,6 @@ export default class MessageHandler {
         switch (operation) {
             case 'get-all-recruiter':
                 response = await adminController.fetchedRecruiterData(data);
-                console.log("response of fetch user in message handler",response);
                 break;
 
             case 'unVerify-recruiter':
